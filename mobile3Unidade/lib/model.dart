@@ -43,13 +43,13 @@ extension FruitTypeUtil on FruitType {
   Widget getImageWidget(double pixelsPerUnit) => Image.asset(imageFile, width: worldSize.width * pixelsPerUnit, height: worldSize.height * pixelsPerUnit);
 }
 
-class PieceOffFruit{
+class PieceOfFruit{
   final Key key = UniqueKey();
   final int createdMS;
   final FlightPath flightPath;
   final FruitType type;
 
-  PieceOffFruit(this.createdMS, this.flightPath, this.type);
+  PieceOfFruit({required this.createdMS, required this.flightPath, required this.type});
 }
 
 class SlicedFruit{
@@ -58,7 +58,7 @@ class SlicedFruit{
   final FlightPath flightPath;
   final FruitType type;
 
-  SlicedFruit(this.slice, this.flightPath, this.type );
+  SlicedFruit({required this.slice, required this.flightPath, required this.type });
 }
 
 class Slice{
@@ -66,7 +66,7 @@ class Slice{
   final Offset begin;
   final Offset end;
 
-  Slice(this.begin, this.end);
+  Slice({required this.begin, required this.end});
 }
 
 class FlightPath{
@@ -75,7 +75,7 @@ class FlightPath{
   final Offset position;
   final Offset velocity;
 
-  FlightPath(this.angle,this.angularVelocity,this.position,this.velocity);
+  FlightPath({required this.angle,required this.angularVelocity,required this.position,required this.velocity});
 
   Offset getPosition(double t){
     return (GRAVITY *.5) * t * t + velocity * t + position;

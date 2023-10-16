@@ -46,8 +46,9 @@ class FlightPathWidgetState extends State<FlightPathWidget> with SingleTickerPro
   @override
   Widget build(BuildContext context){
     return AnimatedBuilder(animation: controller, builder: (context, child){
-        Offset position = widget.flightPath.getPosition(controller.value);
-        return Positioned(left: position.dx - widget.worldSize.width * .5, 
+        Offset position = widget.flightPath.getPosition(controller.value) * widget.pixelsPerUnit;
+        return Positioned(
+        left: position.dx - widget.worldSize.width * .5, 
         bottom: position.dy - widget.worldSize.width * .5,
         child: Transform(
           transform: Matrix4.rotationZ(widget.flightPath.getAngle(controller.value)),
