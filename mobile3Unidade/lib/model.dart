@@ -30,13 +30,13 @@ extension FruitTypeUtil on FruitType {
   String get imageFile{
     switch (this){
       case FruitType.apple:
-      return "";
+      return "assets/apple.png";
       case FruitType.banana:
-      return "";
+      return "assets/banana.png";
       case FruitType.mango:
-      return "";
+      return "assets/mango.png";
       case FruitType.watermelon:
-      return "";
+      return "assets/watermelon.png";
     }
   }
 

@@ -20,11 +20,11 @@ class FlightPathWidget extends StatefulWidget {
   State<StatefulWidget> createState() => FlightPathWidgetState();
 }
 
-class FlightPathWidgetState extends State<FlightPathWidget> with SingleTickerProviderStateMixin{
+class FlightPathWidgetState extends State<FlightPathWidget> with SingleTickerProviderStateMixin {
   late AnimationController controller;
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
 
     List<double> zeros = widget.flightPath.zeros;
@@ -32,29 +32,44 @@ class FlightPathWidgetState extends State<FlightPathWidget> with SingleTickerPro
 
     time += 1.0;
 
-    controller = AnimationController(vsync: this,
-    duration: Duration(milliseconds: (time * 1000.0).round()), 
-    upperBound: time);
+    controller = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: (time * 1000.0).round()),
+      upperBound: time,
+    );
 
-    controller.addStatusListener((status) {if (status == AnimationStatus.completed){
-      widget.onOffScreen();
-    }});
+    controller.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        widget.onOffScreen();
+      }
+    });
 
     controller.forward();
   }
 
   @override
-  Widget build(BuildContext context){
-    return AnimatedBuilder(animation: controller, builder: (context, child){
+  void dispose() {
+    // Make sure to dispose the controller to avoid memory leaks.
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: controller,
+      builder: (context, child) {
         Offset position = widget.flightPath.getPosition(controller.value) * widget.pixelsPerUnit;
         return Positioned(
-        left: position.dx - widget.worldSize.width * .5, 
-        bottom: position.dy - widget.worldSize.width * .5,
-        child: Transform(
-          transform: Matrix4.rotationZ(widget.flightPath.getAngle(controller.value)),
-          alignment: Alignment.center,
-          child: child,
-        ),);
-    },);
+          left: position.dx - widget.worldSize.width * 0.5,
+          bottom: position.dy - widget.worldSize.width * 0.5,
+          child: Transform(
+            transform: Matrix4.rotationZ(widget.flightPath.getAngle(controller.value)),
+            alignment: Alignment.center,
+            child: child,
+          ),
+        );
+      },
+    );
   }
 }
